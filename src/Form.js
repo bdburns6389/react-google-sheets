@@ -2,7 +2,17 @@ import React from "react";
 import { useInputChange } from "./helpers/useInputChange";
 
 const Form = (props) => {
-	const [input, handleInputChange] = useInputChange();
+	const [input, handleInputChange] = useInputChange({
+		date: "Not Answered",
+		instructor: "Not Answered",
+		"student-name": "Not Answered",
+		"student-age": "Not Answered",
+		"student-skill-level": "Not Answered",
+		"skill-worked-on": "Not Answered",
+		"skill-improved": "Not Answered",
+		"why-or-why-not": "Not Answered",
+		"additional-notes": "Not Answered",
+	});
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
