@@ -1,57 +1,55 @@
 import React, { useState } from "react";
 import Form from "./Form";
-import GoogleAuth from "./components/GoogleAuth";
+import Layout from "./components/Layout";
+import Navbar from "./components/Navbar";
 import "./App.css";
 
 function App() {
-	const [isSignedIn, setIsSignedIn] = useState(null);
+  const [isSignedIn, setIsSignedIn] = useState(null);
 
-	const handleAuth = (input) => {
-		setIsSignedIn(input);
-	};
+  const handleAuth = (input) => {
+    setIsSignedIn(input);
+  };
 
-	const handleSubmit = (e, input) => {
-		e.preventDefault();
+  const handleSubmit = (e, input) => {
+    e.preventDefault();
 
-		// Do stuff with input.
-		var values = Object.values(input);
-		var valueRangeBody = { values: [values] };
-		renderUpdateSpreadSheet(valueRangeBody);
-	};
+    // Get values from input and create array.
+    var values = Object.values(input);
+    var valueRangeBody = { values: [values] };
+    renderUpdateSpreadSheet(valueRangeBody);
+  };
 
-	const renderUpdateSpreadSheet = (valueRangeBody) => {
-		if (isSignedIn) {
-			// Render spreadsheet logic here.
-			const SPREADSHEET_ID = "1TSdM4lR9J6ySRz7yc8yH2sqEe089apvH9Q-IExvKMRA";
+  const renderUpdateSpreadSheet = (valueRangeBody) => {
+    if (isSignedIn) {
+      var params = {
+        spreadsheetId: process.env.REACT_APP_SPREADSHEET_ID,
+        range: "Sheet1",
+        valueInputOption: "RAW",
+        insertDataOption: "INSERT_ROWS",
+      };
 
-			var params = {
-				spreadsheetId: SPREADSHEET_ID,
-				range: "Sheet1",
-				valueInputOption: "RAW",
-				insertDataOption: "INSERT_ROWS",
-			};
+      var request = window.gapi.client.sheets.spreadsheets.values.append(
+        params,
+        valueRangeBody
+      );
 
-			var request = window.gapi.client.sheets.spreadsheets.values.append(
-				params,
-				valueRangeBody
-			);
-
-			request.then(
-				function (response) {
-					console.log(response.result);
-				},
-				function (reason) {
-					console.error("Error: " + reason.result.error.message);
-				}
-			);
-		}
-	};
-	return (
-		<div>
-			<GoogleAuth handleAuth={handleAuth} isSignedIn={isSignedIn} />
-			<Form handleSubmit={handleSubmit} />
-		</div>
-	);
+      request.then(
+        function (response) {
+          console.log(response.result);
+        },
+        function (reason) {
+          console.error("Error: " + reason.result.error.message);
+        }
+      );
+    }
+  };
+  return (
+    <Layout>
+      <Navbar handleAuth={handleAuth} isSignedIn={isSignedIn} />
+      <Form handleSubmit={handleSubmit} />
+    </Layout>
+  );
 }
 
 export default App;

@@ -1,6 +1,13 @@
-body{
-  background: rgb(63,251,84);
-  background: radial-gradient(circle, rgba(63,251,84,1) 0%, rgba(70,190,252,1) 100%);
+:root {
+  --main-bg-color: #f8f8ff;
+  --auth-btn-color: #ffc107;
+  --submit-btn-color: #285443;
+  --navbar-color: #285443;
+}
+
+body {
+  margin: 0;
+  background-color: var(--main-bg-color);
 }
 
 .flex {
@@ -13,11 +20,39 @@ body{
 }
 
 label {
+  font-weight: 600;
   display: block;
   margin-bottom: 5px;
 }
 
-input[type=text] {
+input[type="text"] {
   width: 50vw;
   height: 3ch;
+}
+
+.navbar {
+  background-color: var(--navbar-color);
+  height: 3rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn {
+  height: 2rem;
+  width: auto;
+  color: white;
+  font-size: large;
+  border: none;
+}
+
+.btn-submit {
+  background-color: var(--submit-btn-color);
+}
+
+.btn-auth {
+  background-color: var(--auth-btn-color);
+  color: black;
+  margin: 1rem;
 }
